@@ -1,9 +1,12 @@
-// swift-tools-version:5.5
+// swift-tools-version:6.0
 
 import PackageDescription
 
 let package = Package(
     name: "GildedRose",
+    platforms: [
+        .macOS(.v13),
+    ],
     products: [
         .library(
             name: "GildedRose",
@@ -21,7 +24,10 @@ let package = Package(
         ),
         .testTarget(
             name: "GildedRoseTests",
-            dependencies: ["GildedRose"]
+            dependencies: ["GildedRose"],
+            resources: [
+                .process("Resources")
+            ]
         ),
     ]
 )
