@@ -3,23 +3,7 @@ extension Item {
         case sulfuras
         case brie
         case backstage
-        case normalItems
-    }
-
-    var isBrie: Bool {
-        self.category == .brie
-    }
-
-    var isBackstage: Bool {
-        self.category == .backstage
-    }
-
-    var isSulfuras: Bool {
-        self.category == .sulfuras
-    }
-
-    var isNormalItem: Bool {
-        self.category == .normalItems
+        case normal
     }
 
     var category: Category {
@@ -30,7 +14,7 @@ extension Item {
         } else if self.name == "Sulfuras, Hand of Ragnaros" {
             return .sulfuras
         } else {
-            return .normalItems
+            return .normal
         }
     }
 }
@@ -42,9 +26,9 @@ public class GildedRose {
         self.items = items
     }
 
-    fileprivate func improveQuality(_ item: Item) {
+    fileprivate func improveQuality(_ item: Item, by amount: Int = 1) {
         if item.quality < 50 {
-            item.quality = item.quality + 1
+            item.quality = min(item.quality + amount, 50)
         }
     }
     
@@ -53,55 +37,45 @@ public class GildedRose {
             item.quality = item.quality - 1
         }
     }
-    
-    fileprivate func reduceSellIn(_ item: Item) {
+
+    fileprivate func handleSellIn(_ item: Item) {
+        guard item.category != .sulfuras else { return }
         item.sellIn = item.sellIn - 1
+    }
+    
+    fileprivate func handleQuality(_ item: Item) {
+        switch item.category {
+        case .sulfuras:
+            break
+        case .brie:
+            improveQuality(item)
+
+            if item.sellIn < 0 {
+                improveQuality(item)
+            }
+        case .backstage:
+            if item.sellIn < 0 {
+                item.quality = 0
+            } else if item.sellIn < 5 {
+                improveQuality(item, by: 3)
+            } else if item.sellIn < 10 {
+                improveQuality(item, by: 2)
+            } else {
+                improveQuality(item, by: 1)
+            }
+        case .normal:
+            reduceQuality(item)
+
+            if item.sellIn < 0 {
+                reduceQuality(item)
+            }
+        }
     }
     
     public func updateQuality() {
         for item in items {
-            reduceSellIn(item)
-
-            if item.isSulfuras {
-                // do nothing
-            }
-
-            if item.isBrie {
-                improveQuality(item)
-
-                if item.sellIn < 0 {
-                    improveQuality(item)
-                }
-            }
-
-            if item.isBackstage {
-                improveQuality(item)
-
-                // sellin after reduce
-                if item.sellIn < 10 {
-                    improveQuality(item)
-                }
-
-                // sellin after reduce
-                if item.sellIn < 5 {
-                    improveQuality(item)
-                }
-
-                // sellin after reduce
-                if item.sellIn < 0 {
-                    item.quality = 0
-                }
-            }
-
-            if item.category != .brie && item.category != .backstage {
-                reduceQuality(item)
-
-                if item.sellIn < 0 {
-                    reduceQuality(item)
-                }
-            }
-
-
+            handleSellIn(item)
+            handleQuality(item)
         }
     }
 }
