@@ -99,4 +99,14 @@ class BackstagePassStrategyTests: XCTestCase {
         XCTAssertEqual(app.items[0].sellIn, -1)
         XCTAssertEqual(app.items[0].quality, 0)
     }
+
+    func testBackstagePassesForAnyConcert() {
+        let items = [Item(name: "Backstage passes to a Taylor Swift concert", sellIn: 0, quality: 37)]
+        let app = GildedRose(items: items)
+
+        app.updateQuality()
+
+        XCTAssertEqual(app.items[0].sellIn, -1)
+        XCTAssertEqual(app.items[0].quality, 0)
+    }
 }

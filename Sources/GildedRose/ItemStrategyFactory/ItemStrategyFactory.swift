@@ -10,7 +10,7 @@ struct ItemStrategyFactory {
         switch item.name {
         case "Aged Brie":
             return AgedBrieStrategy()
-        case "Backstage passes to a TAFKAL80ETC concert":
+        case _ where item.name.contains("Backstage passes"):
             return BackstagePassStrategy()
         case "Sulfuras, Hand of Ragnaros":
             return SulfurasStrategy()
