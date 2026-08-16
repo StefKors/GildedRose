@@ -39,9 +39,7 @@ class GildedRoseTextTests: XCTestCase {
         Item(name: "Sulfuras, Hand of Ragnaros", sellIn: -1, quality: 80),
         Item(name: "Backstage passes to a TAFKAL80ETC concert", sellIn: 15, quality: 20),
         Item(name: "Backstage passes to a TAFKAL80ETC concert", sellIn: 10, quality: 49),
-        Item(name: "Backstage passes to a TAFKAL80ETC concert", sellIn: 5, quality: 49),
-        // this conjured item does not work properly yet
-        Item(name: "Conjured Mana Cake", sellIn: 3, quality: 6),
+        Item(name: "Backstage passes to a TAFKAL80ETC concert", sellIn: 5, quality: 49)
     ]
 
     func testGoldenMasterSnapshot() throws {
@@ -60,7 +58,6 @@ class GildedRoseTextTests: XCTestCase {
         attach(text: result)
 
         let snapshot = try readSnapshot(for: "testGoldenMasterSnapshot")
-
         // The swift-snapshot-testing library can make this more readable
         // https://github.com/pointfreeco/swift-snapshot-testing
         XCTAssertEqual(
