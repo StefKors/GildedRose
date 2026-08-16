@@ -50,7 +50,7 @@ class GildedRoseTextTests: XCTestCase {
             output.append("-------- day \(day) --------")
             output.append("name, sellIn, quality")
             app.items.forEach {
-                output.append("\($0.name), \($0.sellIn), \($0.quality)")
+                output.append($0.description)
             }
             app.updateQuality()
         }

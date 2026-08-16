@@ -10,7 +10,7 @@
 import XCTest
 
 // New Scenarios:
-// [ ] "Conjured" items degrade in Quality twice as fast as normal items
+// [x] "Conjured" items degrade in Quality twice as fast as normal items
 class GildedRoseConjuredItemsTests: XCTestCase {
     func testConjuredItemsDegradeInQualityTwiceAsFast() {
         let items = [Item(name: "Conjured Mana Cake", sellIn: 3, quality: 6)]

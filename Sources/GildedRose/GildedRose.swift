@@ -4,10 +4,10 @@ public class GildedRose {
     public init(items: [Item]) {
         self.items = items
     }
+    
+    private let factory = ItemStrategyFactory()
 
     public func updateQuality() {
-        let factory = ItemStrategyFactory()
-
         for item in items {
             let strategy = factory.make(for: item)
             strategy.update(item)
