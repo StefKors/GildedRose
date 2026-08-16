@@ -19,7 +19,6 @@ class GildedRoseConjuredItemsTests: XCTestCase {
         app.updateQuality()
 
         XCTAssertEqual(app.items[0].sellIn, 2)
-        XCTExpectFailure("Conjured items not yet implemented.")
         XCTAssertEqual(app.items[0].quality, 4)
     }
 }
