@@ -14,6 +14,8 @@ struct ItemStrategyFactory {
             return BackstagePassStrategy()
         case "Sulfuras, Hand of Ragnaros":
             return SulfurasStrategy()
+        case _ where item.name.contains("Conjured"):
+            return ConjuredStrategy()
         default:
             return NormalStrategy()
         }
