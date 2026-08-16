@@ -1,5 +1,5 @@
 //
-//  GildedRoseTextTests.swift
+//  GoldenMasterTests.swift
 //  GildedRose
 //
 //  Created by Stef Kors on 15/08/2026.
@@ -14,7 +14,7 @@ enum SnapshotError: Error {
     case missingSnapshot(name: String)
 }
 
-class GildedRoseTextTests: XCTestCase {
+class GoldenMasterTests: XCTestCase {
     private func attach(text result: String) {
         if let data = result.data(using: .utf8) {
             let attachment = XCTAttachment(data: data, uniformTypeIdentifier: UTType.plainText.identifier)

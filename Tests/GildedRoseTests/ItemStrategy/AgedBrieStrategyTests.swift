@@ -1,18 +1,15 @@
 //
-//  GildedRoseEdgeCasesTests.swift
+//  AgedBrieStrategyTests.swift
 //  GildedRose
 //
-//  Created by Stef Kors on 14/08/2026.
+//  Created by Stef Kors on 16/08/2026.
 //
 
 
 @testable import GildedRose
 import XCTest
 
-// Edge Cases:
-// [x] "Aged Brie" actually increases in Quality the older it gets
-// [x] "Sulfuras", being a legendary item, never has to be sold or decreases in Quality
-class GildedRoseEdgeCasesTests: XCTestCase {
+class AgedBrieStrategyTests: XCTestCase {
     func testAgedBrieIncreasesInValue() {
         let items = [Item(name: "Aged Brie", sellIn: 10, quality: 13)]
         let app = GildedRose(items: items)
@@ -33,23 +30,19 @@ class GildedRoseEdgeCasesTests: XCTestCase {
         XCTAssertEqual(app.items[0].quality, 12)
     }
 
-    func testSulfurasDoesntDecreaseInSellInOrQuality() {
-        let items = [Item(name: "Sulfuras, Hand of Ragnaros", sellIn: 10, quality: 80)]
+    func testQualityIsNotMoreThan50() {
+        let items = [Item(name: "Aged Brie", sellIn: 10, quality: 49)]
         let app = GildedRose(items: items)
 
         app.updateQuality()
-
-        XCTAssertEqual(app.items[0].sellIn, 10)
-        XCTAssertEqual(app.items[0].quality, 80)
+        XCTAssertLessThanOrEqual(app.items[0].quality, 50)
     }
 
-    func testSulfurasWithNegativeSellInDoesntDecreaseInSellInOrQuality() {
-        let items = [Item(name: "Sulfuras, Hand of Ragnaros", sellIn: -1, quality: 80)]
+    func testQualityIsNotMoreThan50NearBoundary() {
+        let items = [Item(name: "Aged Brie", sellIn: 3, quality: 50)]
         let app = GildedRose(items: items)
 
         app.updateQuality()
-
-        XCTAssertEqual(app.items[0].sellIn, -1)
-        XCTAssertEqual(app.items[0].quality, 80)
+        XCTAssertLessThanOrEqual(app.items[0].quality, 50)
     }
 }
