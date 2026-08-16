@@ -29,4 +29,14 @@ class ConjuredStrategyTests: XCTestCase {
         XCTAssertEqual(app.items[0].sellIn, -2)
         XCTAssertEqual(app.items[0].quality, 2)
     }
+
+    func testConjuredItemsShouldNotDegradePastZero() {
+        let items = [Item(name: "Conjured Mana Cake", sellIn: -1, quality: 2)]
+        let app = GildedRose(items: items)
+
+        app.updateQuality()
+
+        XCTAssertEqual(app.items[0].sellIn, -2)
+        XCTAssertEqual(app.items[0].quality, 0)
+    }
 }
