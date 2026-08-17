@@ -5,10 +5,14 @@
 //  Created by Stef Kors on 15/08/2026.
 //
 
+
+// MARK: - Generic Protocol
 protocol ItemStrategy {
     func update(_ item: Item)
 }
 
+
+// MARK: - Quality
 protocol QualityUpdateStrategy: ItemStrategy {
     func update(_ item: Item)
 }
@@ -23,6 +27,8 @@ extension QualityUpdateStrategy {
     }
 }
 
+
+// MARK: - SellIn
 protocol SellInUpdateStrategy: ItemStrategy {
     func update(_ item: Item)
 }
@@ -33,53 +39,12 @@ extension SellInUpdateStrategy {
     }
 }
 
-struct SulfurasStrategy: ItemStrategy {
-    func update(_ item: Item) {
-        // Intentionally left blank
-    }
-}
 
-struct BackstagePassStrategy: QualityUpdateStrategy, SellInUpdateStrategy {
-    func update(_ item: Item) {
-        decreaseSellIn(of: item)
-        if item.sellIn < 0 {
-            item.quality = 0
-        } else if item.sellIn < 5 {
-            increaseQuality(of: item, by: 3)
-        } else if item.sellIn < 10 {
-            increaseQuality(of: item, by: 2)
-        } else {
-            increaseQuality(of: item, by: 1)
-        }
-    }
-}
 
-struct AgedBrieStrategy: QualityUpdateStrategy, SellInUpdateStrategy {
-    func update(_ item: Item) {
-        decreaseSellIn(of: item)
-        increaseQuality(of: item)
-        if item.sellIn < 0 {
-            increaseQuality(of: item)
-        }
-    }
-}
 
-struct NormalStrategy: QualityUpdateStrategy, SellInUpdateStrategy {
-    func update(_ item: Item) {
-        decreaseSellIn(of: item)
-        decreaseQuality(of: item)
-        if item.sellIn < 0 {
-            decreaseQuality(of: item)
-        }
-    }
-}
 
-struct ConjuredStrategy: QualityUpdateStrategy, SellInUpdateStrategy {
-    func update(_ item: Item) {
-        decreaseSellIn(of: item)
-        decreaseQuality(of: item, by: 2)
-        if item.sellIn < 0 {
-            decreaseQuality(of: item, by: 2)
-        }
-    }
-}
+
+
+
+
+
